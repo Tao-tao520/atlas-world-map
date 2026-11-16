@@ -1,0 +1,13 @@
+node_modules/
+.wrangler/
+.openai/
+.sites-runtime/
+cloudflare/
+dist/
+test-results/
+playwright-report/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.log
