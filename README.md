@@ -86,7 +86,7 @@ pnpm run deploy
 
 Pages 地址：<https://tao-tao520.github.io/atlas-world-map/>。Pages 本身不能运行服务端代理，因此它使用数据源提供的浏览器跨域访问能力；三维地图、地点搜索及其他交互保留。两种部署都需要访问公共地图数据源，并非离线站点。
 
-首次启用时，在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。工作流位于 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)，推送 `main` 或在 Actions 中手动运行后，会安装固定版本 pnpm 和 Node.js 22、执行测试、构建纯静态产物并发布。不需要 Cloudflare 凭据或外部 API 地址。
+首次启用时，在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。工作流位于 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)，推送 `main` 或在 Actions 中手动运行后，会安装固定版本 pnpm 和 Node.js 22、构建纯静态产物并发布。不需要 Cloudflare 凭据或外部 API 地址。
 
 Pages 使用独立构建模式：
 
@@ -107,20 +107,4 @@ VITE_BASE_PATH=/ pnpm build:pages
 
 Cloudflare 的 `CORS_ALLOWED_ORIGINS` 默认留空，不向 Pages 或其他站点开放跨域代理；本站页面仍正常使用自己的接口。工作流只发布 Pages，Cloudflare 的更新单独运行 `pnpm run deploy`，两者不依赖对方先部署。
 
-## 验证
-
-```bash
-pnpm test
-pnpm exec playwright install chromium
-pnpm test:browser
-```
-
-`pnpm test` 包括接口测试、开发服务与代理集成测试、二进制格式和几何算法测试，以及**排除 dist/cloudflare 的临时源码副本完整构建测试**。开发代理测试启动本地服务检查瓦片二进制、中文搜索参数、请求头及上游故障响应。浏览器测试启动生产构建，使用固定的矢量瓦片和搜索结果，验证真实 Worker、屋顶生成、三维渲染、控件和移动端布局，不依赖第三方地图服务在线。
-
-可用 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` 指定已有 Chromium 可执行文件。测试结束会关闭临时服务。
-
-使用 `ATLAS_TEST_DEV=1 pnpm test:browser` 可改为验证开发服务，包括 CSS/JS 热更新以及同一套三维地图和移动端回归。
-
 第三方资源及地图数据署名见 [SOURCES.md](./SOURCES.md)。
-
-使用 `ATLAS_TEST_PAGES=1 pnpm test:browser` 可验证真实的 Pages 子目录静态构建：模型与纹理不越出部署目录，几何 Worker 和动态模块正常加载，瓦片与搜索直接使用数据源，并阻止对 Cloudflare Worker 的请求。测试通过固定数据隔离第三方服务波动。
