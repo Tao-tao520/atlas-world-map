@@ -43,8 +43,8 @@ test('Cloudflare root and /osm/ use the static asset root without a redirect loo
   }
 });
 
-const pagesOrigin = 'https://shitou186.github.io';
-const corsEnv = { CORS_ALLOWED_ORIGINS: ' https://other.example, https://shitou186.github.io ' };
+const pagesOrigin = 'https://tao-tao520.github.io';
+const corsEnv = { CORS_ALLOWED_ORIGINS: ' https://other.example, https://tao-tao520.github.io ' };
 const tileUrl = 'https://atlas.test/api/tiles/16/54883/26776';
 
 for (const cloudflare of [false, true]) {
@@ -81,7 +81,7 @@ for (const cloudflare of [false, true]) {
 
   test(`${deployment} API rejects unlisted origins including lookalikes`, async () => {
     const { app } = await runtime({ cloudflare });
-    for (const origin of ['https://shitou186.github.io.evil.test', 'https://shitou186.github.io:8443', 'null']) {
+    for (const origin of ['https://tao-tao520.github.io.evil.test', 'https://tao-tao520.github.io:8443', 'null']) {
       for (const method of ['GET', 'OPTIONS']) {
         const response = await app.fetch(new Request(tileUrl, { method, headers: { Origin: origin, 'Access-Control-Request-Method': 'GET' } }), corsEnv);
         assert.equal(response.status, 403);

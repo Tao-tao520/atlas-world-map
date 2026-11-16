@@ -84,7 +84,7 @@ pnpm run deploy
 | Cloudflare Workers | 当前 Worker 的 Static Assets | 当前站点 `/api/...` 由自己的 Worker 转发，不访问 Pages |
 | 本地开发 / 生产服务 | Vite / Node | 当前站点 `/api/...` 由 Vite / Node 转发 |
 
-Pages 地址：<https://shitou186.github.io/atlas-world-map/>。Pages 本身不能运行服务端代理，因此它使用数据源提供的浏览器跨域访问能力；三维地图、地点搜索及其他交互保留。两种部署都需要访问公共地图数据源，并非离线站点。
+Pages 地址：<https://tao-tao520.github.io/atlas-world-map/>。Pages 本身不能运行服务端代理，因此它使用数据源提供的浏览器跨域访问能力；三维地图、地点搜索及其他交互保留。两种部署都需要访问公共地图数据源，并非离线站点。
 
 首次启用时，在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。工作流位于 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)，推送 `main` 或在 Actions 中手动运行后，会安装固定版本 pnpm 和 Node.js 22、执行测试、构建纯静态产物并发布。不需要 Cloudflare 凭据或外部 API 地址。
 
